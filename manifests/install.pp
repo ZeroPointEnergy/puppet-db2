@@ -12,6 +12,7 @@ define db2::install (
   $installer_folder  = undef,
   $install_dest      = undef,
   $product           = 'DB2_SERVER_EDITION',
+  $install_type      = 'CUSTOM',
   $components        = [],
   $languages         = ['EN'],
   $configure_license = true,
@@ -26,8 +27,8 @@ define db2::install (
 
   # Set up file locations
 
-  # Based on the product we try and set some sensible defaults for 
-  # filenames and folders, these can be overriden using the 
+  # Based on the product we try and set some sensible defaults for
+  # filenames and folders, these can be overriden using the
   # filename and installer_folder attributes to this define
   #
   case $product {
@@ -59,7 +60,7 @@ define db2::install (
     default => $install_dest
   }
 
-  # Binpath refers to the location of the db2setup executable and 
+  # Binpath refers to the location of the db2setup executable and
   # is set relative to the installer_root and p_installer_folder
   # above
   $binpath="${installer_root}/${p_installer_folder}"

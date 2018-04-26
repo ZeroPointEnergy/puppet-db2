@@ -43,12 +43,12 @@ This module has only been tested for DB2 10.5, but should work for earlier versi
 
 ## `db2::install`
 
-### Usage example for DB2 Server
+### Usage examples for DB2 Server
 
 ```puppet
 db2::install { '10.5':
-  source     => 'http://content.enviatics.com/v10.5_linuxx64_server.tar.gz',
-  components => [
+  source         => 'http://content.enviatics.com/v10.5_linuxx64_server.tar.gz',
+  components     => [
     'ACS',
     'APPLICATION_DEVELOPMENT_TOOLS',
     'DB2_SAMPLE_DATABASE   ',
@@ -62,13 +62,34 @@ db2::install { '10.5':
 }
 ```
 
+Install with default components
+
+```puppet
+db2::install { '10.5':
+  source          => 'http://content.enviatics.com/v10.5_linuxx64_server.tar.gz',
+  install_type    => 'TYPICAL',
+  license_content => template('db2/license/trial.lic'),
+}
+```
+
+### Usage example for Connect Server
+
+```puppet
+db2::install { '10.5':
+  source            => 'http://content.enviatics.com/v10.5_linuxx64_server.tar.gz',
+  product           => 'CONNECT_SERVER',
+  install_type      => 'TYPICAL',
+  configure_license => false,
+}
+```
+
 ### Usage example for DB2 Runtime client
 
 ```puppet
 db2::install { '11.1':
-  source     => 'http://content.enviatics.com/ibm_data_server_runtime_client_linuxx64_v11.1.tar.gz',
-  product    => 'RUNTIME_CLIENT',
-  components => [
+  source            => 'http://content.enviatics.com/ibm_data_server_runtime_client_linuxx64_v11.1.tar.gz',
+  product           => 'RUNTIME_CLIENT',
+  components        => [
     'JAVA_SUPPORT',
     'BASE_CLIENT'
   ],
@@ -86,7 +107,8 @@ db2::install { '11.1':
 * `installer_folder`: The sub-folder relative to `installer_root` where the installer executables are stored.
 * `install_dest`: The target installation folder (default: /opt/ibm/db2/V<version>)
 * `product`: The DB2 product ID (default: DB2_SERVER_EDITION)
-* `components`: An array of components to install
+* `install_type`: valid install types are TYPICAL, COMPACT, CUSTOM (default: 'CUSTOM')
+* `components`: An array of components to install for COSTOM install_type
 * `languages`: An array of languages to install (default: [ 'EN' ])
 * `configure_license`: Whether or not to configure the license
 * `license_content`: The license content as a string (cannot use with license_source)
